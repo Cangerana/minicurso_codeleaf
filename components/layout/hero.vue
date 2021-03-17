@@ -1,5 +1,6 @@
 <template>
   <header class="relative hero-header">
+    <navigation class="absolute top-0 z-10" />
     <div class="absolute top-0 flex items-center justify-around h-full w-full">
       <h1
         class="text-6xl text-light tracking-widest font-semibold uppercase text-center"
@@ -11,7 +12,10 @@
 </template>
 
 <script>
-export default {}
+import navigation from './navigation.vue'
+export default {
+  components: { navigation },
+}
 </script>
 
 <style scoped>

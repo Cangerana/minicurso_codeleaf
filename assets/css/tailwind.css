@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 * {
-  @apply bg-dark font-roboto;
+  @apply text-dark font-roboto;
 }

@@ -1,42 +1,46 @@
 <template>
-  <div>
-    <post-list :posts="posts" />
+  <div class="my-12">
+    <post-item
+      :id="post.id"
+      :title="post.title"
+      :content="post.content"
+      :thumbnail="post.thumbnail"
+      :published_at="new Date(post.published_at)"
+    />
   </div>
 </template>
 
 <script>
-import postList from '~/components/post/post-list.vue'
 import gql from 'graphql-tag'
+import postItem from '~/components/post/post-item.vue'
 export default {
-  components: { postList },
+  components: { postItem },
   async asyncData({ app, params }) {
-    const limit = 4
-    const start = parseInt(params.page || 0)
-
     const apolloClient = app.apolloProvider.defaultClient
+
     const query = gql`
-      query Post($limit: Int, $start: Int) {
-        posts(limit: $limit, start: $start) {
+      query post($id: ID!) {
+        post(id: $id) {
           id
           title
           description
+          content
           published_at
           thumbnail {
-            url
             alternativeText
+            url
           }
         }
       }
     `
     const variables = {
-      limit: limit,
-      start: start,
+      id: parseInt(params.id),
     }
 
     const { data } = await apolloClient.query({ query, variables })
 
     return {
-      posts: data.posts,
+      post: data.post,
     }
   },
 }
